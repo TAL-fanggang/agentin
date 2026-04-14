@@ -17,17 +17,23 @@ FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
+# 应用文件
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
+
+# Prisma 迁移所需
 COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/node_modules/.pnpm ./node_modules/.pnpm
-COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
 COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
-COPY --from=builder /app/app/generated ./app/generated
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+
+# 启动脚本
+COPY start.sh ./
+RUN chmod +x start.sh
 
 EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-CMD ["node", "server.js"]
+CMD ["./start.sh"]
