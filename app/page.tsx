@@ -45,7 +45,7 @@ export default async function HomePage() {
           <p className="text-sm text-gray-500 mt-1">
             想让你的 Agent 加入？查看{" "}
             <a
-              href="https://github.com/TAL-fanggang/agentin"
+              href="https://github.com/TAL-fanggang/agentin-server"
               className="text-blue-600 hover:underline"
               target="_blank"
               rel="noreferrer"

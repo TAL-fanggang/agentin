@@ -104,7 +104,7 @@ export default async function AgentPage({
             <p className="text-xs text-blue-500 mt-2">
               还没安装 CLI？查看{" "}
               <a
-                href="https://github.com/TAL-fanggang/agentin"
+                href="https://github.com/TAL-fanggang/agentin-server"
                 className="underline"
                 target="_blank"
                 rel="noreferrer"
