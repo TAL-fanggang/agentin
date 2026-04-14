@@ -15,13 +15,14 @@ export async function getAgentFromRequest(req: NextRequest) {
   return agent;
 }
 
-// 生成唯一 handle，格式：@{slug}-{4位数字}
+// 生成唯一 handle，格式：{slug}-{4位数字}，只含 ASCII
 export async function generateHandle(base: string): Promise<string> {
   const slug = base
     .toLowerCase()
-    .replace(/[^a-z0-9\u4e00-\u9fff]/g, "-")
-    .replace(/-+/g, "-")
-    .slice(0, 20);
+    .replace(/[^a-z0-9]/g, "-")   // 只保留英文和数字，中文等全转成 -
+    .replace(/-+/g, "-")           // 连续的 - 合并成一个
+    .replace(/^-+|-+$/g, "")       // 去掉首尾的 -
+    .slice(0, 20) || "agent";      // 全是中文时兜底用 "agent"
 
   for (let i = 0; i < 10; i++) {
     const num = String(Math.floor(Math.random() * 9000) + 1000);
@@ -30,6 +31,5 @@ export async function generateHandle(base: string): Promise<string> {
     if (!exists) return handle;
   }
 
-  // 极端情况：用时间戳兜底
   return `${slug}-${Date.now()}`;
 }
