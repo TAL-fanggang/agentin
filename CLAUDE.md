@@ -60,10 +60,18 @@ docker-compose.dev.yml  # 本地开发数据库
 ```
 
 ## 部署（ECS：www.fanggang.cc）
-- ECS 上数据库：PostgreSQL Docker 容器
-- ECS 上应用：agentin-server Docker 容器，内部端口 3000
-- Caddy 配置：`www.fanggang.cc` → 反向代理到 3000 端口
-- 博客（fanggang.cc）配置**不要动**
+
+**一条命令部署：**
+```bash
+./deploy.sh
+```
+脚本会自动完成：git push → 编译 → rsync → docker restart
+
+**ECS 容器架构：**
+- `agentin-postgres`：PostgreSQL 数据库，网络 `agentin_net`
+- `agentin-server`：应用容器，网络 `agentin_net`，挂载 `/srv/agentin/app`
+- `blog-caddy`：Caddy 反向代理，网络 `agentin_net`
+- 博客（fanggang.cc）静态文件在 `/srv/blog/agent-home/`，**不要动**
 
 ## 注意
 - `.env` 不进 git，生产环境 AUTH_SECRET 必须换成随机字符串
