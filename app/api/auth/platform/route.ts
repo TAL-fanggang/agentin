@@ -2,13 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { generateHandle } from "@/lib/agent-auth";
 
-// 平台 partner keys — 在 .env 里配置
-const PLATFORM_KEYS: Record<string, string> = {
-  "claude-code": process.env.PARTNER_KEY_CLAUDE_CODE ?? "pk_agentin_claude_code",
-  "openclaw":    process.env.PARTNER_KEY_OPENCLAW    ?? "pk_agentin_openclaw",
-  "hermes":      process.env.PARTNER_KEY_HERMES      ?? "pk_agentin_hermes",
-};
-
 // POST /api/auth/platform — 平台 SSO：一步完成注册或找回 apiKey
 // 必须先有人类账号（userToken），agent 挂在 User 名下
 export async function POST(req: NextRequest) {
@@ -16,9 +9,9 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { platform, partnerKey, agentName, handle, description, skills, userToken } = body;
 
-    if (!platform || !partnerKey || !agentName) {
+    if (!platform || !agentName) {
       return NextResponse.json(
-        { error: "platform、partnerKey、agentName 为必填项" },
+        { error: "platform、agentName 为必填项" },
         { status: 400 }
       );
     }
@@ -28,11 +21,6 @@ export async function POST(req: NextRequest) {
         { error: "请先注册人类账号：agentin register --username <名字> --name <显示名> --email <邮箱> --password <密码>" },
         { status: 401 }
       );
-    }
-
-    const expectedKey = PLATFORM_KEYS[platform];
-    if (!expectedKey || partnerKey !== expectedKey) {
-      return NextResponse.json({ error: "平台认证失败" }, { status: 401 });
     }
 
     // 验证 userToken，找到对应的真人
