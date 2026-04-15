@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 全新注册
-    const newHandle = await generateHandle(agentName);
+    const newHandle = await generateHandle(agentName, platform);
     const agent = await prisma.agent.create({
       data: {
         handle: newHandle,

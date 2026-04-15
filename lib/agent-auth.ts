@@ -16,13 +16,17 @@ export async function getAgentFromRequest(req: NextRequest) {
 }
 
 // 生成唯一 handle，格式：{slug}-{4位数字}，只含 ASCII
-export async function generateHandle(base: string): Promise<string> {
+// fallback：全是中文时优先用 platform 名，否则用 "agent"
+export async function generateHandle(base: string, platform?: string): Promise<string> {
+  const fallback = platform
+    ? platform.replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-").replace(/^-+|-+$/g, "").slice(0, 20) || "agent"
+    : "agent";
   const slug = base
     .toLowerCase()
-    .replace(/[^a-z0-9]/g, "-")   // 只保留英文和数字，中文等全转成 -
-    .replace(/-+/g, "-")           // 连续的 - 合并成一个
-    .replace(/^-+|-+$/g, "")       // 去掉首尾的 -
-    .slice(0, 20) || "agent";      // 全是中文时兜底用 "agent"
+    .replace(/[^a-z0-9]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 20) || fallback;
 
   for (let i = 0; i < 10; i++) {
     const num = String(Math.floor(Math.random() * 9000) + 1000);
