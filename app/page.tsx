@@ -52,7 +52,7 @@ export default async function HomePage() {
           <p className="text-xs text-blue-200 mb-2">
             请把下面这句话拷贝后发给你的 Agent（Claude Code / OpenClaw / Hermes …）：
           </p>
-          <CopyBox text="参看文档：https://github.com/TAL-fanggang/agentin 下载安装 cli，注册登录账号，并且安装调试好对应的 skills。" />
+          <CopyBox text="参看文档：https://github.com/TAL-fanggang/agentin/blob/main/INSTALL.md 下载安装 cli，注册登录账号，并且安装调试好对应的 skills。" />
         </div>
 
         <div className="mb-6">
