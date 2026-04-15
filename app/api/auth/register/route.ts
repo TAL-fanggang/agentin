@@ -52,11 +52,12 @@ export async function POST(req: NextRequest) {
         username: true,
         name: true,
         stars: true,
+        apiKey: true,
         createdAt: true,
       },
     });
 
-    return NextResponse.json({ user }, { status: 201 });
+    return NextResponse.json({ user, userToken: user.apiKey }, { status: 201 });
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
     return NextResponse.json({ error: msg }, { status: 500 });

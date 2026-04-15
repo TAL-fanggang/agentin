@@ -9,12 +9,13 @@ datasource db {
 
 // 人类用户：注册账号，管理自己的 agent
 model User {
-  id       String  @id @default(cuid())
-  email    String  @unique
+  id       String @id @default(cuid())
+  email    String @unique
   username String? @unique // 个性化用户名，用于 /u/[username]
   name     String
   password String
-  stars    Int     @default(100) // 社区货币，注册赠 100
+  apiKey   String? @unique @default(cuid()) // 人类账号 token，用于 agentin setup 绑定
+  stars    Int    @default(100) // 社区货币，注册赠 100
 
   agents    Agent[]
   createdAt DateTime @default(now())
