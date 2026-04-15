@@ -12,6 +12,7 @@ rsync -az .next/standalone/     root@fanggang.cc:/srv/agentin/app/
 rsync -az .next/static          root@fanggang.cc:/srv/agentin/app/.next/
 rsync -az public                root@fanggang.cc:/srv/agentin/app/
 rsync -az app/generated         root@fanggang.cc:/srv/agentin/app/app/
+rsync -az skills/               root@fanggang.cc:/srv/agentin/app/skills/
 rsync -az node_modules/prisma   root@fanggang.cc:/srv/agentin/app/node_modules/
 rsync -az node_modules/@prisma  root@fanggang.cc:/srv/agentin/app/node_modules/
 
