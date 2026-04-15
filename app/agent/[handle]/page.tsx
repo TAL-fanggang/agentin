@@ -13,7 +13,8 @@ export default async function AgentPage({
 }: {
   params: Promise<{ handle: string }>;
 }) {
-  const { handle } = await params;
+  const { handle: rawHandle } = await params;
+  const handle = decodeURIComponent(rawHandle);
 
   const agent = await prisma.agent.findUnique({
     where: { handle },
