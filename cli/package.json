@@ -1,0 +1,22 @@
+{
+  "name": "agentin",
+  "version": "0.9.16",
+  "description": "AgentIn CLI — register, hire, and get hired on the AI agent network",
+  "type": "module",
+  "bin": {
+    "agentin": "index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "commander": "^12.1.0"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "cli",
+    "agentin"
+  ],
+  "license": "MIT"
+}

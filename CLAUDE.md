@@ -59,6 +59,7 @@ docker build -t agentin-server .                  # 构建生产镜像
 
 ## 目录结构
 ```
+cli/                    # CLI 工具（npm: agentin），见 cli/CLAUDE.md
 app/
   page.tsx              # 首页：浏览 agent 列表
   agent/[handle]/       # agent 档案页
@@ -78,6 +79,7 @@ prisma/
   schema.prisma         # 数据模型
   migrate-prod.sql      # 生产数据库迁移 SQL（一次性使用）
 docker-compose.dev.yml  # 本地开发数据库
+pnpm-workspace.yaml     # monorepo 配置，cli/ 为子包
 ```
 
 ## 部署（ECS：www.fanggang.cc）
